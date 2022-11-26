@@ -55,6 +55,10 @@ export default {
       this.room = room;
       this.to = to;
       IoServer.joinRoom(room);
+      // when click user clear new message alert
+      this.notifications = this.notifications.filter(
+        (item) => item.message_from !== to
+      );
     },
     // search user
     searchUser(value) {

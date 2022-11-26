@@ -13,8 +13,8 @@ module.exports = (httpSever) => {
   io.on("connection", (socket) => {
     console.log("user connect");
     console.log(socket.handshake.query.userid);
-
-    socket.join(socket.handshake.query.userid);
+    const ownRoom = socket.handshake.query.userid;
+    socket.join(ownRoom);
     // join room
     socket.on("join", (room) => {
       // console.log({ "current romm": socket.rooms });
@@ -23,7 +23,7 @@ module.exports = (httpSever) => {
       // console.log(roomList);
       // leave last room
       roomList
-        .filter((item) => item !== room)
+        .filter((item) => item !== room && item !== ownRoom)
         .forEach((item) => socket.leave(item));
 
       // console.log(Object.keys(socket.rooms));
